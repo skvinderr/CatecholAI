@@ -233,7 +233,7 @@ startOverBtn.addEventListener('click', () => {
 
 // --- Gemini API Calls ---
 const callGemini = async (prompt, isJson = false) => {
-    const apiKey = "AIzaSyBxB3Jt_M3OqQMUuifkyHKZRNJEZEsFw-M"; // Add your Gemini API key here
+    const apiKey = ""; // Add your Gemini API key here
     
     if (!apiKey) {
         console.error("Gemini API key is missing. Please add your API key to use the AI features.");
