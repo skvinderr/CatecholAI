@@ -49,7 +49,7 @@ try {
     // Replace this with your actual Firebase config
     firebaseConfig = {
         // Add your Firebase config object here
-        apiKey: "AIzaSyAEZkFHoNKBJ0EiJg8gKS8IhwKgc0WPTg0",
+        apiKey: "your api key",
         authDomain: "catecholai.firebaseapp.com",
         projectId: "catecholai",
         storageBucket: "catecholai.firebasestorage.app",
