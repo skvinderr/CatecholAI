@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Career and Skills Advisor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div id="app" class="max-w-4xl mx-auto p-4 sm:p-6 md:p-8">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-indigo-600">Catechol AI Career Advisor</h1>
+            <p class="text-gray-600 mt-2">Your guide to the future of work in India.</p>
+        </header>
+
+        <!-- Main Content -->
+        <main id="mainContent">
+            <!-- Initial View: Get Started -->
+            <div id="getStartedView" class="hidden text-center bg-white p-8 rounded-lg shadow-md">
+                <h2 class="text-2xl font-semibold mb-4">Find Your Perfect Career Path with My AI</h2>
+                <p class="text-gray-600 mb-6">Let's build your profile to discover careers and skills made just for you.</p>
+                <button id="getStartedBtn" class="bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors">
+                    Get Started
+                </button>
+            </div>
+
+            <!-- Profile Creation Wizard -->
+            <div id="wizardView" class="hidden bg-white p-8 rounded-lg shadow-md">
+                <!-- Stepper -->
+                <div class="mb-8 flex items-center justify-center space-x-4">
+                    <div id="step-1" class="step step-active flex items-center">
+                        <span class="w-8 h-8 rounded-full border-2 flex items-center justify-center">1</span>
+                        <span class="ml-2 hidden sm:inline">Interests</span>
+                    </div>
+                    <div class="flex-1 border-t-2 border-gray-200"></div>
+                    <div id="step-2" class="step flex items-center text-gray-500">
+                        <span class="w-8 h-8 rounded-full border-2 flex items-center justify-center">2</span>
+                        <span class="ml-2 hidden sm:inline">Academics</span>
+                    </div>
+                     <div class="flex-1 border-t-2 border-gray-200"></div>
+                    <div id="step-3" class="step flex items-center text-gray-500">
+                        <span class="w-8 h-8 rounded-full border-2 flex items-center justify-center">3</span>
+                        <span class="ml-2 hidden sm:inline">Skills</span>
+                    </div>
+                </div>
+
+                <!-- Form Steps -->
+                <div id="form-step-1">
+                    <h3 class="text-xl font-semibold mb-4 text-center">What are your interests?</h3>
+                    <p class="text-gray-600 text-center mb-4">Tell us what you enjoy doing in your free time</p>
+                    <textarea id="interests" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" rows="4" placeholder="e.g., Playing video games, coding, dancing, singing, solving puzzles, creative writing, helping people, building things..., Anything"></textarea>
+                </div>
+
+                <div id="form-step-2" class="hidden">
+                    <h3 class="text-xl font-semibold mb-4 text-center">What are your academic strengths?</h3>
+                    <p class="text-gray-600 text-center mb-4">Share your favorite subjects and academic achievements</p>
+                     <textarea id="academics" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" rows="4" placeholder="e.g., Favorite subjects (Maths, Physics, Anything), recent grades, academic achievements, Anything, Tell about your academic journey"></textarea>
+                </div>
+                
+                <div id="form-step-3" class="hidden">
+                     <h3 class="text-xl font-semibold mb-4 text-center">What skills do you have?</h3>
+                     <p class="text-gray-600 text-center mb-4">List any skills or talents you've developed</p>
+                    <textarea id="skills" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" rows="4" placeholder="e.g., Public speaking, programming languages (Python, Java), graphic design, teamwork, problem-solving..., Anything"></textarea>
+                </div>
+
+                <!-- Navigation -->
+                <div class="mt-8 flex justify-between">
+                    <button id="prevBtn" class="bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors" disabled>Previous</button>
+                    <button id="nextBtn" class="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors">Next</button>
+                    <button id="submitBtn" class="hidden bg-green-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-700 transition-colors">Get Recommendations</button>
+                </div>
+            </div>
+            
+            <!-- Loading Indicator -->
+            <div id="loadingView" class="hidden text-center p-8">
+                 <div class="flex justify-center items-center space-x-2">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+                    <p class="text-gray-600">Analyzing your profile and finding the best career paths for you...</p>
+                 </div>
+            </div>
+
+            <!-- Results View -->
+            <div id="resultsView" class="hidden">
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-semibold">Your Recommended Career Paths</h2>
+                    <p class="text-gray-600">Based on your profile, here are some careers where you could thrive.</p>
+                </div>
+                <div id="recommendations" class="space-y-4">
+                    <!-- Career cards will be inserted here -->
+                </div>
+                 <div class="text-center mt-8">
+                     <button id="startOverBtn" class="bg-gray-200 text-gray-800 font-semibold py-3 px-6 rounded-lg hover:bg-gray-300 transition-colors">Start Over</button>
+                </div>
+            </div>
+
+            <!-- Skills Modal -->
+            <div id="skillsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center p-4">
+                <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+                    <div class="p-6 border-b flex justify-between items-center">
+                        <h3 id="modalCareerTitle" class="text-xl font-semibold">Skills Roadmap</h3>
+                        <button id="closeModalBtn" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+                    </div>
+                    <div id="modalBody" class="p-6">
+                        <!-- Skills roadmap will be inserted here -->
+                        <div id="modalLoading" class="text-center">
+                            <div class="flex justify-center items-center space-x-2">
+                                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+                                <p class="text-gray-600">Generating your personalized skills roadmap...</p>
+                             </div>
+                        </div>
+                        <div id="modalContent" class="hidden prose max-w-none"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Welcome/Name Collection Modal -->
+            <div id="welcomeModal" class="fixed inset-0 bg-gradient-to-br from-indigo-900 to-purple-900 bg-opacity-95 flex items-center justify-center p-4 z-50">
+                <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md transform transition-all">
+                    <div class="p-8 text-center">
+                        <div class="mb-6">
+                            <div class="w-20 h-20 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                            </div>
+                            <h2 class="text-2xl font-bold text-gray-800 mb-2">Welcome to Catechol AI</h2>
+                            <p class="text-gray-600">Let's start your career discovery journey!</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="userName" class="block text-sm font-medium text-gray-700 mb-2 text-left">What should we call you?</label>
+                            <input 
+                                type="text" 
+                                id="userName" 
+                                placeholder="Enter your name" 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-center text-lg"
+                                maxlength="50"
+                            >
+                            <p class="text-xs text-gray-500 mt-2">We'll use this to personalize your experience</p>
+                        </div>
+                        
+                        <button 
+                            id="startJourneyBtn" 
+                            class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                            disabled
+                        >
+                            Start My Journey ✨
+                        </button>
+                        
+                        <p class="text-xs text-gray-400 mt-4">Your data is securely stored and never shared</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Beautiful Footer -->
+        <footer class="mt-16 py-8 text-center">
+            <div class="max-w-4xl mx-auto px-4">
+                <!-- Decorative line -->
+                <div class="flex items-center justify-center mb-6">
+                    <div class="flex-1 border-t border-gray-300"></div>
+                    <div class="px-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="flex-1 border-t border-gray-300"></div>
+                </div>
+                
+                <!-- Footer content -->
+                <div class="space-y-4">
+                    <p class="text-gray-600 text-lg font-medium">
+                        Made with 
+                        <span class="inline-block animate-pulse">
+                            <svg class="w-5 h-5 text-red-500 mx-1 inline" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+                            </svg>
+                        </span>
+                        by 
+                        <span class="font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                            Aditya
+                        </span>
+                    </p>
+                    
+                    <p class="text-gray-500 text-sm">
+                        Empowering careers • Shaping futures • Building dreams
+                    </p>
+                    
+                    <!-- Year and additional info -->
+                    <div class="flex items-center justify-center space-x-4 text-xs text-gray-400">
+                        <span>© 2025</span>
+                        <span>•</span>
+                        <span>Catechol AI Career Advisor</span>
+                        <span>•</span>
+                        <span>India</span>
+                    </div>
+                </div>
+                
+                <!-- Subtle decoration -->
+                <div class="mt-6 flex justify-center space-x-2">
+                    <div class="w-2 h-2 bg-indigo-400 rounded-full animate-bounce"></div>
+                    <div class="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style="animation-delay: 0.1s;"></div>
+                    <div class="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>

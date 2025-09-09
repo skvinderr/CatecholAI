@@ -1,0 +1,38 @@
+/* Custom Styles for Catechol AI Career Advisor */
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.step-active {
+    border-color: #4f46e5;
+    color: #4f46e5;
+}
+
+/* Additional animations and custom styles */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Custom scrollbar for modal content */
+.prose::-webkit-scrollbar {
+    width: 6px;
+}
+
+.prose::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+.prose::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+.prose::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
