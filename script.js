@@ -52,9 +52,9 @@ try {
         apiKey: "your api key",
         authDomain: "your domain",
         projectId: "catecholai",
-        storageBucket: "catecholai.firebasestorage.app",
-        messagingSenderId: "939557938189",
-        appId: "1:939557938189:web:c0ad26acb030a4240a6144",
+        storageBucket: ".....",
+        messagingSenderId: "....",
+        appId: "your id",
         measurementId: "G-LEJM0QSZK6"
     };
     
