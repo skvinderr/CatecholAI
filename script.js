@@ -50,7 +50,7 @@ try {
     firebaseConfig = {
         // Add your Firebase config object here
         apiKey: "your api key",
-        authDomain: "catecholai.firebaseapp.com",
+        authDomain: "your domain",
         projectId: "catecholai",
         storageBucket: "catecholai.firebasestorage.app",
         messagingSenderId: "939557938189",
